@@ -1,6 +1,5 @@
 // SAVE==========================================
 $(document).on("click", "#btnSave", function(event) {
-	
 	// Clear alerts---------------------
 	$("#alertSuccess").text("");
 	$("#alertSuccess").hide();
@@ -13,7 +12,6 @@ $(document).on("click", "#btnSave", function(event) {
 		$("#alertError").show();
 		return;
 	}
-	
 	// If valid------------------------
 	var type = ($("#hidInvoiceNoSave").val() == "") ? "POST" : "PUT";
 	$.ajax(
@@ -35,7 +33,7 @@ function onBillSaveComplete(response, status) {
 			$("#alertSuccess").text("Successfully saved.");
 			$("#alertSuccess").show();
 			$("#hidInvoiceNoSave").html(resultSet.data);
-		} else if (resultSet.status.trim() == "error") {
+		} else if (resultSet.status() == "error") {
 			$("#alertError").text(resultSet.data);
 			$("#alertError").show();
 		}
@@ -100,34 +98,38 @@ function onBillDeleteComplete(response, status) {
 // CLIENT-MODEL================================================================
 function validateBillForm() {
 	// Customer Name
-	if ($("#cusName").val().trim() == "") {
+	if ($("#date").val() == "") {
+		return "Insert Date.";
+	}
+	// Customer Name
+	if ($("#cusname").val() == "") {
 		return "Insert Item Customer Name.";
 	}
 	// Account Number
-	if ($("#accNo").val().trim() == "") {
+	if ($("#accno").val() == "") {
 		return "Insert Account Number.";
 	}
 	// Number of Units
-	if ($("#noOfUnits").val().trim() == "") {
+	if ($("#units").val() == "") {
 		return "Insert Number of Units.";
 	}
 	// PRICE-------------------------------
-	if ($("#unitPrice").val().trim() == "") {
+	if ($("#price").val() == "") {
 		return "Insert Unit Price.";
 	}
 	// is numerical value
-	var tmpPrice = $("#unitPrice").val().trim();
+	var tmpPrice = $("#price").val();
 	if (!$.isNumeric(tmpPrice)) {
 		return "Insert a numerical value for Unit Price.";
 	}
 	// convert to decimal price
-	$("#unitPrice").val(parseFloat(tmpPrice).toFixed(2));
+	$("#price").val(parseFloat(tmpPrice).toFixed(2));
 	// TAX-------------------------------
-	if ($("#tax").val().trim() == "") {
+	if ($("#tax").val() == "") {
 		return "Insert Tax.";
 	}
 	// is numerical value
-	var tmpPrice1 = $("#tax").val().trim();
+	var tmpPrice1 = $("#tax").val();
 	if (!$.isNumeric(tmpPrice1)) {
 		return "Insert a numerical value for Tax.";
 	}
